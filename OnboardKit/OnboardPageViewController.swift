@@ -38,6 +38,7 @@ internal final class OnboardPageViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.preferredFont(forTextStyle: .title1)
     label.textAlignment = .center
+    label.numberOfLines = 0
     return label
   }()
 
@@ -123,6 +124,8 @@ internal final class OnboardPageViewController: UIViewController {
     NSLayoutConstraint.activate([
       titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
+      titleLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16.0),
+      titleLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16.0),
       pageStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16.0),
       pageStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
       pageStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
