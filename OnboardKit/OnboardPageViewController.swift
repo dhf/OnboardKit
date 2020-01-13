@@ -45,6 +45,7 @@ internal final class OnboardPageViewController: UIViewController {
   private lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.setContentCompressionResistancePriority(.init(rawValue: 700), for: .vertical)
     return imageView
   }()
 
@@ -52,6 +53,7 @@ internal final class OnboardPageViewController: UIViewController {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.preferredFont(forTextStyle: .title3)
+    label.setContentCompressionResistancePriority(.init(rawValue: 755), for: .vertical)
     label.numberOfLines = 0
     label.textAlignment = .center
     return label
@@ -165,7 +167,7 @@ internal final class OnboardPageViewController: UIViewController {
   private func configureImageView(_ imageName: String?) {
     if let imageName = imageName, let image = UIImage(named: imageName) {
       imageView.image = image
-      imageView.heightAnchor.constraint(equalTo: pageStackView.heightAnchor, multiplier: 0.5).isActive = true
+      imageView.heightAnchor.constraint(lessThanOrEqualTo: pageStackView.heightAnchor, multiplier: 0.5).isActive = true
     } else {
       imageView.isHidden = true
     }
