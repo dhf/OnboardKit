@@ -5,7 +5,8 @@
 
 import UIKit
 
-internal protocol OnboardPageViewControllerDelegate: class {
+@MainActor
+internal protocol OnboardPageViewControllerDelegate: AnyObject {
 
   /// Informs the `delegate` that the action button was tapped
   ///
@@ -152,7 +153,7 @@ internal final class OnboardPageViewController: UIViewController {
 
   func configureWithPage(_ page: OnboardPage) {
     configureTitleLabel(page.title)
-    configureImageView(page.imageName)
+    configureImageView(page.imageReference?.image)
     configureDescriptionLabel(page.description)
     configureActionButton(page.actionButtonTitle, action: page.action)
     configureAdvanceButton(page.advanceButtonTitle)
@@ -165,8 +166,8 @@ internal final class OnboardPageViewController: UIViewController {
       ])
   }
 
-  private func configureImageView(_ imageName: String?) {
-    if let imageName = imageName, let image = UIImage(named: imageName) {
+  private func configureImageView(_ image: UIImage?) {
+    if let image = image {
       imageView.image = image
       imageView.heightAnchor.constraint(lessThanOrEqualTo: pageStackView.heightAnchor, multiplier: 0.5).isActive = true
     } else {

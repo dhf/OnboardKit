@@ -4,18 +4,41 @@
 //
 
 import Foundation
+import UIKit
 
 public typealias OnboardPageCompletion = ((_ success: Bool, _ error: Error?) -> Void)
 public typealias OnboardPageAction = (@escaping OnboardPageCompletion) -> Void
 
+protocol ImgResource {
+  func getImage() -> UIImage
+}
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ImageResource: ImgResource {
+  func getImage() -> UIImage {
+    UIImage(resource: self)
+  }
+}
+
 public struct OnboardPage {
+  enum ImageReference {
+    case named(String)
+    case resource(ImgResource)
+
+    var image: UIImage? {
+      switch self {
+      case .named(let name): UIImage(named: name)
+      case .resource(let resource): resource.getImage()
+      }
+    }
+  }
+
   /// The title text used for the top label of the onboarding page
   let title: String
 
   /// An optional image to be used in the onboarding page
   ///
   /// - note: If no image is used, the description label will adjust fill the empty space
-  let imageName: String?
+  let imageReference: ImageReference?
 
   /// An optional description text to be used underneath the image
   ///
@@ -42,7 +65,22 @@ public struct OnboardPage {
               actionButtonTitle: String? = nil,
               action: OnboardPageAction? = nil) {
     self.title = title
-    self.imageName = imageName
+    self.imageReference = imageName.map { .named($0) }
+    self.description = description
+    self.advanceButtonTitle = advanceButtonTitle
+    self.actionButtonTitle = actionButtonTitle
+    self.action = action
+  }
+
+  @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+  public init(title: String,
+              imageResrouce: ImageResource?,
+              description: String?,
+              advanceButtonTitle: String = NSLocalizedString("Next", comment: ""),
+              actionButtonTitle: String? = nil,
+              action: OnboardPageAction? = nil) {
+    self.title = title
+    self.imageReference = imageResrouce.map { .resource($0) }
     self.description = description
     self.advanceButtonTitle = advanceButtonTitle
     self.actionButtonTitle = actionButtonTitle

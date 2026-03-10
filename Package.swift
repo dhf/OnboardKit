@@ -1,14 +1,17 @@
-// swift-tools-version:5.0
+// swift-tools-version:6.2
 import PackageDescription
 
 let package = Package(
     name: "OnboardKit",
-    platforms: [.iOS(.v11)],
+    platforms: [.iOS(.v15)],
     products: [
-        .library(name: "OnboardKit",  targets: ["OnboardKit"])
+        .library(name: "OnboardKit",  targets: ["OnboardKit"]),
     ],
-    dependencies: [],
     targets: [
-        .target(name: "OnboardKit", path: "OnboardKit")
+        .target(name: "OnboardKit",
+                path: "OnboardKit",
+                swiftSettings: [
+                    .swiftLanguageMode(.v6),
+                ]),
     ]
 )
