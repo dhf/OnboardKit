@@ -74,13 +74,13 @@ public struct OnboardPage {
 
   @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
   public init(title: String,
-              imageResrouce: ImageResource?,
+              imageResource: ImageResource?,
               description: String?,
               advanceButtonTitle: String = NSLocalizedString("Next", comment: ""),
               actionButtonTitle: String? = nil,
               action: OnboardPageAction? = nil) {
     self.title = title
-    self.imageReference = imageResrouce.map { .resource($0) }
+    self.imageReference = imageResource.map { .resource($0) }
     self.description = description
     self.advanceButtonTitle = advanceButtonTitle
     self.actionButtonTitle = actionButtonTitle
